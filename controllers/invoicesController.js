@@ -8,7 +8,10 @@ export const getInvoices = async (req, res) => {
 }
 
 export const getInvoice = async (req, res) => {
-  res.send('get invoice')
+  const { invoiceId } = req.params
+  const { userId } = req.auth
+  const invoice = await Invoice.find({ _id: invoiceId, createdBy: userId })
+  res.status(StatusCodes.OK).json(invoice)
 }
 
 export const addInvoice = async (req, res) => {

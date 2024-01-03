@@ -10,7 +10,7 @@ import {
 const router = Router()
 
 router.get('/', getInvoices)
-router.get('/:id', getInvoice)
+router.get('/:invoiceId', getInvoice)
 router.post('/', addInvoice)
 router.patch('/:id', editInvoice)
 router.delete('/:id', deleteInvoice)
