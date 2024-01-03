@@ -3,18 +3,20 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 dotenv.config()
 
-import Job from './models/JobModel.js'
+const testUserId = 'user_2aQqMqpChze0kuQbi2Ixc9dYWzX'
+
+import Invoice from './model/invoiceModel.js'
 
 try {
   await mongoose.connect(process.env.MONGO_URL)
-  const jsonJobs = JSON.parse(
-    await readFile(new URL('./utils/mockData.json', import.meta.url))
+  const jsonInvoices = JSON.parse(
+    await readFile(new URL('./mockdata.json', import.meta.url))
   )
-  const jobs = jsonJobs.map((job) => {
-    return { ...job, createdBy: user._id }
+  const invoices = jsonInvoices.map((invoice) => {
+    return { ...invoice, createdBy: testUserId }
   })
-  await Job.deleteMany({ createdBy: user._id })
-  await Job.create(jobs)
+  await Invoice.deleteMany({ createdBy: testUserId })
+  await Invoice.create(invoices)
   console.log('Success')
   process.exit(0)
 } catch (error) {

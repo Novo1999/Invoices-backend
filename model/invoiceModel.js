@@ -39,6 +39,7 @@ const invoiceSchema = new mongoose.Schema({
     country: String,
   },
   invoiceDate: Date,
+  createdBy: String,
 })
 
 export default mongoose.model('Invoice', invoiceSchema)

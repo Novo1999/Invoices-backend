@@ -1,5 +1,10 @@
+import { StatusCodes } from 'http-status-codes'
+import Invoice from '../model/invoiceModel.js'
+
 export const getInvoices = async (req, res) => {
-  res.send('get invoices')
+  const { userId } = req.auth
+  const invoices = await Invoice.find({ createdBy: userId })
+  res.status(StatusCodes.OK).json(invoices)
 }
 
 export const getInvoice = async (req, res) => {
