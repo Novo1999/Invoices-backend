@@ -25,3 +25,15 @@ export const editInvoice = async (req, res) => {
 export const deleteInvoice = async (req, res) => {
   res.send('delete invoice')
 }
+
+export const updateInvoiceStatus = async (req, res) => {
+  const { userId } = req.auth
+  const { invoiceId } = req.params
+  const { status } = req.body
+  const updatedInvoice = await Invoice.findOneAndUpdate(
+    { _id: invoiceId, createdBy: userId },
+    { status },
+    { new: true }
+  )
+  res.status(StatusCodes.OK).json(updatedInvoice)
+}
