@@ -8,7 +8,17 @@ export const getOrder = async (req, res) => {
 }
 
 export const addOrder = async (req, res) => {
-  res.send('add invoice')
+  const { data: order } = req.body
+  console.log(order)
+  const { userId } = req.auth
+  const existingOrder = await Order.findOne({ createdBy: userId })
+  if (!existingOrder) {
+    const createdOrder = await Order.create(order)
+    return res.status(StatusCodes.OK).json(createdOrder)
+  }
+  existingOrder?.order.push(order)
+  const updatedOrder = await existingOrder.save()
+  res.status(StatusCodes.OK).json(updatedOrder)
 }
 
 export const editOrder = async (req, res) => {

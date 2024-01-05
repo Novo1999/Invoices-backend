@@ -25,8 +25,8 @@ try {
   ]
 
   // Create a single Order document for the user with the provided array of strings
+  await Order.deleteMany({ createdBy: testUserId })
   await Order.create({ order: orderArray, createdBy: testUserId })
-
   console.log('Success')
   process.exit(0)
 } catch (error) {
