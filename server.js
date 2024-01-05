@@ -18,6 +18,10 @@ app.use(express.json())
 const port = process.env.PORT || 6100
 app.use(cors())
 
+app.get('/', (req, res) => {
+  res.send('Hey this is my API running 🥳')
+})
+
 app.use(
   '/api/invoices/protected',
   ClerkExpressRequireAuth({}),
