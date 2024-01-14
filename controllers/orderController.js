@@ -13,7 +13,7 @@ export const addOrder = async (req, res) => {
   const { userId } = req.auth
   const existingOrder = await Order.findOne({ createdBy: userId })
   if (!existingOrder) {
-    const createdOrder = await Order.create(order)
+    const createdOrder = await Order.create({ order, createdBy: userId })
     return res.status(StatusCodes.OK).json(createdOrder)
   }
   existingOrder?.order.push(order)
@@ -29,4 +29,16 @@ export const editOrder = async (req, res) => {
     { order }
   )
   res.status(StatusCodes.OK).json(updatedOrder)
+}
+
+export const deleteOrder = async (req, res) => {
+  const { userId } = req.auth
+  console.log(req.body)
+  const { data: id } = req.body
+  console.log(id)
+  const orders = await Order.findOne({ createdBy: userId })
+  console.log('ORDER', orders)
+  orders.filter((value) => value !== id)
+  const newOrder = await orders.save()
+  res.status(StatusCodes.OK).json(newOrder)
 }

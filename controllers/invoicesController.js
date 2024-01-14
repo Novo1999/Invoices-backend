@@ -62,7 +62,10 @@ export const editInvoice = async (req, res) => {
 }
 
 export const deleteInvoice = async (req, res) => {
-  res.send('delete invoice')
+  const { userId } = req.auth
+  const { id } = req.params
+  await Invoice.findOneAndDelete({ createdBy: userId, _id: id })
+  res.status(StatusCodes.OK).json({ msg: 'Deleted Invoice Successfully' })
 }
 
 export const updateInvoiceStatus = async (req, res) => {
