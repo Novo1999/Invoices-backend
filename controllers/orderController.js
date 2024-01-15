@@ -33,12 +33,12 @@ export const editOrder = async (req, res) => {
 
 export const deleteOrder = async (req, res) => {
   const { userId } = req.auth
-  console.log(req.body)
-  const { data: id } = req.body
+  console.log('body', req.body)
+  const { id } = req.body
   console.log(id)
   const orders = await Order.findOne({ createdBy: userId })
   console.log('ORDER', orders)
-  orders.filter((value) => value !== id)
+  orders.order = orders.order.filter((value) => value !== id)
   const newOrder = await orders.save()
   res.status(StatusCodes.OK).json(newOrder)
 }

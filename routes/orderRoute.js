@@ -7,11 +7,6 @@ import {
 } from '../controllers/orderController.js'
 
 const router = Router()
-router
-  .route('/')
-  .get(getOrder)
-  .post(addOrder)
-  .patch(editOrder)
-  .patch(deleteOrder)
+router.route('/').get(getOrder).post(addOrder).patch(editOrder).put(deleteOrder)
 
 export default router
