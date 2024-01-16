@@ -8,10 +8,11 @@ export const getOrder = async (req, res) => {
 }
 
 export const addOrder = async (req, res) => {
+  const { userId } = req.auth
   const { data: order } = req.body
   console.log(order)
-  const { userId } = req.auth
   const existingOrder = await Order.findOne({ createdBy: userId })
+  // if order does not exist, create new order
   if (!existingOrder) {
     const createdOrder = await Order.create({ order, createdBy: userId })
     return res.status(StatusCodes.OK).json(createdOrder)

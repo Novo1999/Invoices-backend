@@ -55,5 +55,5 @@ const populateInvoices = async () => {
   }
 }
 
-// populateInvoices()
-populateOrders()
+populateInvoices()
+// populateOrders()
