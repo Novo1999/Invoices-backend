@@ -58,7 +58,56 @@ export const addInvoice = async (req, res) => {
 }
 
 export const editInvoice = async (req, res) => {
-  res.send('edit invoice')
+  const { userId } = req.auth
+  const { invoiceId } = req.params
+  const invoice = req.body
+  console.log(invoice)
+  const {
+    clientStreet,
+    fromCity,
+    fromCountry,
+    fromPostCode,
+    itemList,
+    payment,
+    toCity,
+    toCountry,
+    toPostCode,
+    street,
+    email,
+    name,
+    project,
+  } = invoice
+  const updatedInvoice = await Invoice.findOneAndUpdate(
+    { _id: invoiceId, createdBy: userId },
+    {
+      ...invoice,
+      billFrom: {
+        city: fromCity,
+        country: fromCountry,
+        postCode: fromPostCode,
+        street,
+      },
+      billTo: {
+        city: toCity,
+        country: toCountry,
+        postCode: toPostCode,
+        street: clientStreet,
+      },
+      due: payment.toString(),
+      paymentTerm: payment,
+      items: itemList.map((item) => {
+        return {
+          ...item,
+          name: item.itemName,
+        }
+      }),
+      email,
+      name,
+      project,
+    },
+    { new: true }
+  )
+  res.status(StatusCodes.OK).json(updatedInvoice)
 }
 
 export const deleteInvoice = async (req, res) => {

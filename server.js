@@ -6,9 +6,11 @@ import invoiceRouter from './routes/invoiceRouter.js'
 import orderRouter from './routes/orderRoute.js'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
+import ExpressMongoSanitize from 'express-mongo-sanitize'
 import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
 import errorHandlerMiddleware from './middlewares/errorHandlerMiddleware.js'
 import cors from 'cors'
+import helmet from 'helmet'
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -17,6 +19,8 @@ app.use(express.json())
 
 const port = process.env.PORT || 6100
 app.use(cors())
+app.use(helmet())
+app.use(ExpressMongoSanitize())
 
 app.get('/', (req, res) => {
   res.send('Hey this is my API running 🥳')

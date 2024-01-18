@@ -13,7 +13,7 @@ const router = Router()
 router.get('/', getInvoices)
 router.get('/:invoiceId', getInvoice)
 router.post('/', addInvoice)
-router.patch('/:id', editInvoice)
+router.patch('/:invoiceId', editInvoice)
 router.patch('/mark/:invoiceId', updateInvoiceStatus)
 router.delete('/:id', deleteInvoice)
 
