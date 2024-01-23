@@ -76,6 +76,7 @@ export const editInvoice = async (req, res) => {
     email,
     name,
     project,
+    date,
   } = invoice
   const updatedInvoice = await Invoice.findOneAndUpdate(
     { _id: invoiceId, createdBy: userId },
@@ -104,6 +105,7 @@ export const editInvoice = async (req, res) => {
       email,
       name,
       project,
+      invoiceDate: date,
     },
     { new: true }
   )
